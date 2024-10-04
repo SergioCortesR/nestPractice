@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 
 @Controller('/tasks')
@@ -11,7 +11,9 @@ export class TasksController {
     }
 
     @Get()
-    getAllTasks(){
+    getAllTasks(@Query() query:any){
+        console.log(query);
+        
         //buscar en una bd o hacer alguna otra peticion a otro end
         return this.tasksService.getTasks();
     }
@@ -22,10 +24,16 @@ export class TasksController {
         return this.tasksService.testing();
     }
 
-    @Post()
-    createTask(){
+    @Get('/:id')
+    showTask(@Param('id') id: string){
         //buscar en una bd o hacer alguna otra peticion a otro end
-        return this.tasksService.createTask();
+        return this.tasksService.showTask(parseInt(id));
+    }
+
+    @Post()
+    createTask(@Body() task: any){
+        //buscar en una bd o hacer alguna otra peticion a otro end
+        return this.tasksService.createTask(task);
     }
 
     @Put()
