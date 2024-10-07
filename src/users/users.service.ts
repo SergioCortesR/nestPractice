@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { createUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
-    private users = [
+    private users : any = [
         {
             id: 1,
             name: 'John Does',
@@ -20,4 +21,12 @@ export class UsersService {
     ];
 
     getUsers = () => this.users;  // Función flecha
+
+    createUser(user: createUserDto){
+        this.users.push(user);  
+        return {
+            ...user,
+            id: this.users.length + 1
+        }
+    }
 }
